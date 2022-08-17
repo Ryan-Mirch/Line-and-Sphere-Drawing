@@ -3,14 +3,14 @@ extends Node
 var points:Array
 var lines:Array
 
+var mouse_line: MeshInstance3D
 
 func _ready() -> void:
-	pass
+	call_deferred("_init_mouse_line")
 	
 	
-func _process(delta: float) -> void:
-	_draw_mouse_line()
-
+func _process(_delta: float) -> void:
+	_update_mouse_line()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Left Click"):
@@ -40,18 +40,25 @@ func get_mouse_pos():
 		return rayDic["position"]
 	return null
 
-func _draw_mouse_line()->void:
+func _init_mouse_line():
+	mouse_line = Draw3D.line(Vector3.ZERO, Vector3.ZERO, Color.BLACK)
+		
+func _update_mouse_line():
 	var mouse_pos = get_mouse_pos()
+	var mouse_line_immediate_mesh = mouse_line.mesh as ImmediateMesh
 	if mouse_pos != null:
 		var mouse_pos_V3:Vector3 = mouse_pos
-		var line = Draw3D.line(Vector3.ZERO, mouse_pos_V3, Color.BLACK)
-		get_tree().create_timer(.001).timeout.connect(func():line.queue_free())
+		mouse_line_immediate_mesh.clear_surfaces()
+		mouse_line_immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+		mouse_line_immediate_mesh.surface_add_vertex(Vector3.ZERO)
+		mouse_line_immediate_mesh.surface_add_vertex(mouse_pos_V3)
+		mouse_line_immediate_mesh.surface_end()	
 		
 func _draw_point_and_line()->void:
 	var mouse_pos = get_mouse_pos()
 	if mouse_pos != null:
 		var mouse_pos_V3:Vector3 = mouse_pos
-		points.append(Draw3D.point(mouse_pos_V3,0.025))
+		points.append(Draw3D.point(mouse_pos_V3,0.05))
 		
 		#If there are at least 2 points...
 		if points.size() > 1:
