@@ -96,3 +96,12 @@ surface_material_override/0 = ExtResource("2_fv1kc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Prism/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_lsnf5")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 158.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 32
+text = "Left Click - Draw
+Right Click - Clear"
