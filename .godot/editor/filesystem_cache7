@@ -1,0 +1,9 @@
+0b7126e0c6e86d3ec295a72f5aa6e0bd
+::res://::1660714941
+Click To Draw Path.gd::GDScript::-1::1660714926::0::1::::<>Node<>::
+Demo.tscn::PackedScene::1102047196677309766::1660714931::0::1::::<><>::uid://by0al5irc1r60<>res://Click To Draw Path.gd<>uid://bq5ujksxl5avb
+Draw3D.gd::GDScript::-1::1660714656::0::1::::<>Node<>::
+icon.png::CompressedTexture2D::2238831335463376457::1660585519::1660585525::1::::<><>::
+::res://Materials/::1660714310
+Floor.tres::StandardMaterial3D::4122583607425383691::1660714310::0::1::::<><>::
+Shapes.tres::StandardMaterial3D::3572604480624761035::1660714310::0::1::::<><>::
