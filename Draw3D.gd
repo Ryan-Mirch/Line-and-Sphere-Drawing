@@ -1,6 +1,6 @@
 extends Node
 
-func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 0):
+func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_seconds: float = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
 	var material := ORMMaterial3D.new()
@@ -17,14 +17,14 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 
 	material.albedo_color = color
 	
 	get_tree().get_root().add_child(mesh_instance)
-	if persist_ms:
-		await get_tree().create_timer(persist_ms).timeout
+	if persist_seconds:
+		await get_tree().create_timer(persist_seconds).timeout
 		mesh_instance.queue_free()
 	else:
 		return mesh_instance
 
 
-func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_ms = 0):
+func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_seconds = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var sphere_mesh := SphereMesh.new()
 	var material := ORMMaterial3D.new()
@@ -41,8 +41,8 @@ func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_ms = 0
 	material.albedo_color = color
 	
 	get_tree().get_root().add_child(mesh_instance)
-	if persist_ms:
-		await get_tree().create_timer(persist_ms).timeout
+	if persist_seconds:
+		await get_tree().create_timer(persist_seconds).timeout
 		mesh_instance.queue_free()
 	else:
 		return mesh_instance
