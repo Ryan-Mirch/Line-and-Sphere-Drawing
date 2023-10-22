@@ -1,6 +1,14 @@
 extends Node
 
-func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE) -> MeshInstance3D:
+var meshes = {}
+
+func _process(delta):
+	for mesh_instance in meshes:
+		if Time.get_ticks_msec() > meshes[mesh_instance].expiry_time:
+			mesh_instance.queue_free()
+			meshes.erase(mesh_instance)
+
+func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 0) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
 	var material := ORMMaterial3D.new()
@@ -17,11 +25,13 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE) -> MeshInstan
 	material.albedo_color = color
 	
 	get_tree().get_root().add_child(mesh_instance)
+	if persist_ms:
+		meshes[mesh_instance] = { expiry_time = Time.get_ticks_msec() + persist_ms }
 	
 	return mesh_instance
 
 
-func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE) -> MeshInstance3D:
+func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_ms = 0) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
 	var sphere_mesh := SphereMesh.new()
 	var material := ORMMaterial3D.new()
@@ -38,8 +48,7 @@ func point(pos:Vector3, radius = 0.05, color = Color.WHITE_SMOKE) -> MeshInstanc
 	material.albedo_color = color
 	
 	get_tree().get_root().add_child(mesh_instance)
+	if persist_ms:
+		meshes[mesh_instance] = { expiry_time = Time.get_ticks_msec() + persist_ms }
 	
 	return mesh_instance
-	
-
-
